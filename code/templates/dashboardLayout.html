@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<!-- common for all pages -->
+<div class="main-container">
+    <!-- Nav menu -->
+    <div class="left-container">
+        <!-- User account block -->
+        <div class="user-tag-block">
+            <div class="user--name">
+                {% block username %}
+
+                {% endblock %}
+                <span>20/03/2021</span>
+            </div>
+        </div>
+        <!-- nav items -->
+        <div class="nav">
+            <p class="normal-text">Dashboard</p>
+            <ul>
+                <li class="nav-blocks ">
+                    <a href="/dashboard" class="nav-links">
+                        <i class="fas fa-home"></i>
+                        Home</a>
+                </li>
+                <li class="nav-blocks"><a href="" class="nav-links">
+                        <i class="fas fa-user"></i>
+                        Profile</a></li>
+                <li class="nav-blocks"><a href="/dashboard/newsuppliers" class="nav-links">
+                        <i class="fas fa-users"></i></i>
+                        My suppliers</a></li>
+                <li class="nav-blocks"><a href="/dashboard/newInvoice" class="nav-links">
+                        <i class="fas fa-file-invoice"></i></i>
+                        New invoice</a></li>
+                <li class="nav-blocks">
+                    <a href="/dashboard/EditInventory" class="nav-links">
+                        <i class="fas fa-warehouse"></i>
+                        Edit Inventory</a>
+                </li>
+                <li class="nav-blocks"><a href="" class="nav-links">
+                        <i class="fas fa-boxes"></i>
+                        View Inventory</a></li>
+                <li class="nav-blocks">
+                    <a href="" class="nav-links">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Billing</a>
+                </li>
+                <li class="nav-blocks">
+                    <a href="/" class="nav-links">
+                        <i class="fas fa-user-lock"></i>
+                        Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% block rightContainer %}
+
+    {% endblock %}
+</div>
+
+{% endblock %}

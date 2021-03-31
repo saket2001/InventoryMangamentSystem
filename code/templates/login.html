@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='login.css')}}">
+
+<title>Log in</title>
+{% endblock %}
+
+{% block body %}
+<!-- nav-->
+<nav>
+    <div class="logo">
+        Inventory Management System
+    </div>
+    <div class="nav-items">
+        <a href="" class="nav-link">Contact Us</a>
+        <a href="/signup" class="nav-link">Sign up</a>
+        <a href="/login" class="nav-link">Sign in</a>
+    </div>
+</nav>
+{% for mess in get_flashed_messages() %}
+<div class="flash-message">
+    <p>{{mess}}</p>
+    <button class="close-btn">OK</button>
+</div>
+{% endfor %}
+<div class="container">
+    <form class="form login-form" action="/login" method="POST">
+        <!-- Log in html -->
+        <h2>Login </h2>
+        <input type="text" name="username" class="input-box" placeholder="Username" required>
+        <input type="password" name="password" class="input-box" placeholder="password" required>
+        <button class=" btn login-btn" type="submit">Log In</button>
+        <p>Not registered? <a href="/signup" class="a-links">Create account now</a></p>
+    </form>
+</div>
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

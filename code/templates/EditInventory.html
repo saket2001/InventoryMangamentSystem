@@ -1,0 +1,63 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='EditInventory.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>Edit inventory</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+    <!-- automatic inventory -->
+    <div class="automatic-IMS">
+        <h2>Automatic features</h2>
+        <p>
+            We can update the inventory with the products which are close to their threshold limit . <br> Just click the
+            button and inventory will reorder the products for you
+        </p>
+        <button class="btn automatic-btn">Update</button>
+
+        <hr>
+
+        <p>
+            You can also clear the whole inventory . Just click the
+            button and inventory will be cleared
+        </p>
+        <button class="btn automatic-btn">Clear All</button>
+    </div>
+
+    <!-- add product form  -->
+    <form class="form">
+        <h2>Add product Manually to the inventory</h2>
+
+        <label class="label" for="Product id">Product Id</label>
+        <input type="text" id="Product id" class="input-box input-box--small">
+
+        <label class="label" for="Product name">Product name</label>
+        <input type="text" id="Product Name" class="input-box input-box--large">
+
+        <label class="label" for="Product name">Product Category</label>
+        <input type="text" id="Product Category" class="input-box input-box--large">
+
+        <label class="label" for="Product Quantity">Product Quantity</label>
+        <input type="text" id="Product Quantity" class="input-box input-box--small">
+
+        <label class="label" for="Product Price">Product Price</label>
+        <input type="text" id="Product Price" class="input-box input-box--small">
+
+        <label class="label" for="Product min quantity ">Product Min Quantity to maintain</label>
+        <input type="text" id="Product min quantity" class="input-box input-box--small">
+
+        <button class="btn submit-btn">Save Changes</button>
+    </form>
+</div>
+
+{% endblock %}
