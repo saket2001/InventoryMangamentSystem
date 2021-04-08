@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: rgb(122, 57, 184);
+    --secondary-bg-color: rgb(141, 182, 80);
+}
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+    color: rgb(37, 34, 34);
+}
+
+
+/* ////////////////////////
+/*  */
+.main-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    height: auto;
+}
+
+/* left container */
+.left-container {
+    display: flex;
+    flex-flow: column wrap;
+    width: 20%;
+    height: auto;
+    background-color: #292c2c;
+    font-size: 22px;
+}
+
+.left-container .user-tag-block {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    height: auto;
+    background-color: var(--primary-bg-color);
+    padding: 2% 0;
+}
+
+
+.left-container .user-tag-block .user--name {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 2% 5%;
+    font-size: 24px;
+    color: white;
+}
+
+.left-container .user-tag-block .user--name>span {
+    width: 100%;
+    height: 100%;
+    padding: 1%;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.left-container .nav {
+    display: inherit;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 2%;
+    font-size: 20px;
+    justify-content: center;
+    color: white;
+}
+
+.left-container .nav .normal-text {
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.left-container .nav .nav-blocks,
+.normal-text {
+    display: inherit;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    padding: 3% 2%;
+    margin: 2%;
+    justify-content: flex-start;
+    font-weight: 500;
+}
+
+
+
+.left-container .nav .nav-blocks .nav-links {
+    text-decoration: none;
+    color: white;
+}
+
+.left-container .nav .nav-blocks:hover {
+    background-color: var(--primary-bg-color);
+}
+
+.left-container .nav .active-tab {
+    background-color: var(--secondary-bg-color);
+}
+
+/* right container */
+
+.main-container .right-container {
+    display: flex;
+    flex-flow: column wrap;
+    width: 80%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #d5def8;
+}
+
+.main-container .right-container .welcome-message {
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    font-size: 32px;
+    background-color: var(--primary-bg-color);
+    color: white;
+}

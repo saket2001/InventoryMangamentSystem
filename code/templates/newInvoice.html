@@ -1,0 +1,206 @@
+{% extends "dashboard.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='newInvoice.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>New Invoice</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+
+    <form class="form" action="/CreateNewInvoice" method="POST">
+        <h2>New Invoice</h2>
+        <p>
+            You can order new products from suppliers by filling the details here. <br>
+            We will update the inventory with the new products you ordered. So don't update inventory manually.
+        </p>
+
+        <p>------------------------------------------------------------------------------------------------------------------
+        </p>
+
+        <label class="label" for="Supplier name">Supplier name</label>
+        <input type="text" id="Supplier Name" name="s-name" class="input-box input-box--large">
+
+        <label class="label" for="Supplier id">Supplier Id</label>
+        <input type="text" id="Supplier id" name="s-id" class="input-box input-box--small">
+
+        <label class="label" for="Supplier id">Supplier Type</label>
+        <input type="text" id="Supplier id" name="s-type" class="input-box input-box--small">
+
+        <label class="label" for="Product id">Product Id</label>
+        <input type="text" id="Product id" name="p-id" class="input-box input-box--small">
+
+        <label class="label" for="Product name">Product name</label>
+        <input type="text" id="Product Name" name="p-name" class="input-box input-box--large">
+
+        <label class="label" for="Product Quantity">Product Quantity</label>
+        <input type="text" id="Product Quantity" name="p-quantity" class="input-box input-box--small">
+
+        <label class="label" for="Product Price">Product Price</label>
+        <input type="text" id="Product Price" name="p-price" class="input-box input-box--small">
+
+        <button class="btn submit-btn" type="submit">Order</button>
+    </form>
+    <!-- view product -->
+    <div class="view-inventory">
+        <div class="info">
+            <h1>View Your Invoices</h1>
+            <p>
+                To refresh your Invoices , click the button .
+            </p>
+            <form action="/dashboard/viewInvoices" method="GET">
+                <button class="btn get-btn" type="submit">Refresh</button>
+            </form>
+        </div>
+
+        <table>
+            <h2>Your Past Orders</h2>
+            <tr>
+                <th>Invoice ID</th>
+                <th>S ID</th>
+                <th>S Name</th>
+                <th>S Type</th>
+                <th>user</th>
+                <th>Invoice Date</th>
+                <th>P ID</th>
+                <th>P name</th>
+                <th>P category</th>
+                <th>P price</th>
+                <th>Total Amount</th>
+            </tr>
+            {% for row in table %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td>{{row[8]}}</td>
+                <td>{{row[9]}}</td>
+                <td>{{row[10]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<script src="{{url_for('static',filename='help.js')}}"></script>
+
+{% endblock %}
+
+<!-- <table>
+            <tr>
+                <th>Sr no</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td>
+                    1
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id1">
+                </td>
+                <td class="row-large">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name1">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity1">
+                </td>
+                <td class="row-medium">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price1">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    2
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id2">
+                </td>
+                <td class="row-large">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name2">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity2">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    3
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id3">
+                </td>
+                <td class="row-large">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name3">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity3">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price3">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    4
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id4">
+                </td>
+                <td class="row-large">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name4">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity4">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price4">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    5
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id5">
+                </td>
+                <td class="row-large">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name5">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity5">
+                </td>
+                <td class="row-small">
+                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price5">
+                </td>
+            </tr>
+        </table> -->
