@@ -1,0 +1,81 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='dashboard.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>Dashboard</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+    <div class="block-container">
+        {% for mess in get_flashed_messages() %}
+        <div class="flash-message">
+            <p>{{mess}}</p>
+            <button class="close-btn">OK</button>
+        </div>
+        {% endfor %}
+
+        <div class="block block--1">
+            <div class="unit">
+                {{total_product}}
+            </div>
+            <div class="unit-description">
+                Total Products in inventory
+            </div>
+            <div class="block-logo">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+        </div>
+        <div class="block block--2">
+            <div class="unit">
+                0
+            </div>
+            <div class="unit-description">
+                Total Invoices created
+            </div>
+            <div class="block-logo">
+                <i class="fas fa-file-invoice    "></i>
+            </div>
+        </div>
+        <div class="block block--3">
+            <div class="unit">
+                0.0 &nbsp; ₹
+
+            </div>
+            <div class="unit-description">
+                Pending order Amount
+            </div>
+            <div class="block-logo">
+                <i class="fas fa-money-check    "></i>
+            </div>
+        </div>
+        <div class="block block--3">
+            <div class="unit">
+                0
+            </div>
+            <div class="unit-description">
+                Total suppliers you have
+            </div>
+            <div class="block-logo">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}
