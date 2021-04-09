@@ -13,8 +13,6 @@ mysql.init_app(app)
 app.config['SECRET_KEY'] = 'IMS'
 
 ###################################
-# variables
-username = ""
 
 # variable for date
 x = datetime.datetime.now()
@@ -50,18 +48,24 @@ def UpdateStockOnInvoice(p_id, p_quantity):
         return redirect(url_for("newInvoice"))
 
 
-# for counting total products in inventory
+# for counting details in inventory
 
-def CountProductsOfInventory():
+def CountDetailsOfInventory(option):
     if 'username' in session:
         username = session["username"]
         # making connection
         conn = mysql.connect()
         cur = conn.cursor()
         userid = username
-        # getting the old stock
-        cur.execute(
-            "SELECT Count(productid) FROM `product` WHERE `userid` = '" + userid + "'")
+        if option == 1:
+            cur.execute(
+                "SELECT Count(productid) FROM `product` WHERE `userid` = '" + userid + "'")
+        if option == 2:
+            cur.execute(
+                "SELECT Count(supplier_id) FROM `supplier` WHERE `userid` = '" + userid + "'")
+        if option == 3:
+            cur.execute(
+                "SELECT Count(invoice_id) FROM `invoice` WHERE `userid` = '" + userid + "'")
         total_product = cur.fetchone()
         return total_product[0]
     else:
@@ -95,7 +99,7 @@ def login():
         else:
             if data[0] == username and data[1] == password:
                 flash("You logged in successfully ")
-                return render_template('dashboard.html', username=username, date=displayDate)
+                return redirect(url_for('dashboard'))
     return render_template('login.html')
 
 
@@ -153,9 +157,22 @@ def dashboard():
     if 'username' in session:
         username = session["username"]
         # calling helper functions
-        total_product = CountProductsOfInventory()
+        total_product = CountDetailsOfInventory(1)
+        total_suppliers = CountDetailsOfInventory(2)
+        total_invoices = CountDetailsOfInventory(3)
 
-        return render_template("dashboard.html", username=username, date=displayDate, total_product=total_product)
+        return render_template("dashboard.html", username=username, date=displayDate, total_product=total_product, total_suppliers=total_suppliers, total_invoices=total_invoices)
+    else:
+        return redirect("login")
+
+
+@app.route('/dashboard/myprofile')
+def profile():
+    if 'username' in session:
+        username = session["username"]
+        # calling helper functions
+
+        return render_template("profile.html", username=username, date=displayDate)
     else:
         return redirect("login")
 
