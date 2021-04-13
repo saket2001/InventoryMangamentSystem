@@ -6,7 +6,7 @@
 // variables
 const alertCloseBtn = document.querySelectorAll(".close-btn");
 const alertMessageDiv = document.querySelectorAll(".flash-message");
-
+const BillNumbers = document.querySelectorAll(".bill-numbers");
 /////////////////////////
 
 // functions
@@ -16,7 +16,6 @@ const alertClose = function () {
     div.style.display = "none";
   });
 };
-
 /////////////////////////
 
 // event listeners

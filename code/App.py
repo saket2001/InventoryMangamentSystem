@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash, session, url_for
+import uuid
 from flaskext.mysql import MySQL
 import datetime
 app = Flask(__name__)  # creating the Flask class object
@@ -13,6 +14,11 @@ mysql.init_app(app)
 app.config['SECRET_KEY'] = 'IMS'
 
 ###################################
+# global variables
+BillProducts = []
+customer_name = ""
+BillID = ""
+
 
 # variable for date
 x = datetime.datetime.now()
@@ -20,10 +26,25 @@ displayDate = x.strftime("%x")
 
 ###################################
 # helper functions
+
+
+def calcTotalBill():
+    sum = 0
+    total_amount = 0
+    for x in BillProducts:
+        cur = x[4]
+        sum = sum+cur
+        total_amount = sum
+
+    return total_amount
+
+
+def formatNumber(num):
+    return ('{:0,d}'.format(num))
 # to update stocks on invoice
 
 
-def UpdateStockOnInvoice(p_id, p_quantity):
+def UpdateStockOnInvoice(p_id, p_quantity, opt):
     if 'username' in session:
         username = session["username"]
         # making connection
@@ -35,7 +56,13 @@ def UpdateStockOnInvoice(p_id, p_quantity):
             "SELECT `product_instock`,`product_maxlimit` FROM `product` WHERE `userid` = '" + userid + "' and `productid`= '" + p_id + "'")
         # calc the new stock
         currentStock = cur.fetchone()
-        newStock = int(currentStock[0])+int(p_quantity)
+        # for adding stock
+        if opt == "add":
+            newStock = int(currentStock[0])+int(p_quantity)
+        # for deleteing stock
+        if opt == "sub":
+            newStock = int(currentStock[0])-int(p_quantity)
+
         if newStock > currentStock[1]:
             flash("You cannot add product stock over product max limit")
         else:
@@ -45,7 +72,7 @@ def UpdateStockOnInvoice(p_id, p_quantity):
             flash("NEW !! Inventory updated 1 sec ago")
             conn.commit()
     else:
-        return redirect(url_for("newInvoice"))
+        return redirect(url_for("login"))
 
 
 # for counting details in inventory
@@ -294,6 +321,15 @@ def gotoHelpPage():
         return redirect("login")
 
 
+@app.route('/dashboard/billing')
+def billing():
+    if 'username' in session:
+        username = session["username"]
+        return render_template("billing.html", username=username, date=displayDate)
+    else:
+        return redirect("login")
+
+
 @app.route('/logout')
 def logout():
     # remove the username from the session if it is there
@@ -349,7 +385,7 @@ def updateStock():
             userid = username
             product_id = request.form['p-id']
             product_quantity = request.form['p-quantity']
-            UpdateStockOnInvoice(product_id, product_quantity)
+            UpdateStockOnInvoice(product_id, product_quantity, "add")
             return render_template("EditInventory.html", username=username, date=displayDate)
     else:
         return redirect("login")
@@ -507,10 +543,9 @@ def CreateNewInvoice():
                 cur.execute("INSERT INTO `invoice` (`supplier_id`,`supplier_name`,`supplier_type`,`userid`,`invoice_date`,`product_id`,`product_name`,`product_quantity`,`product_prices`,`total_amount`) VALUES (%s,"
                             "%s,%s,%s,%s,%s,%s,%s,%s,%s)", (supplier_id, supplier_name, supplier_type, userid, invoiceDate, product_id, product_name, product_quantity, product_price, totalAmtOfInvoice))
                 conn.commit()
-                conn.close()
                 flash("Your order worth {} Rs Has been placed.".format(
                     totalAmtOfInvoice))
-                UpdateStockOnInvoice(product_id, product_quantity)
+                UpdateStockOnInvoice(product_id, product_quantity, "add")
             except:
                 flash("Something went wrong ! Try again")
                 conn.close()
@@ -534,6 +569,126 @@ def viewInvoices():
         except:
             flash("Error while getting your suppliers list")
         return render_template("newInvoice.html", username=username, table=list, date=displayDate)
+    else:
+        return redirect("login")
+
+# function to do the following
+# 1.Get data one by one from form
+# 2.print that data one by one in the bill
+# 3.calculate total of bill
+# 4.print the whole bill
+# 5.Update the stock of products selling
+
+
+@app.route('/dashboard/Createbill', methods=["GET", "POST"])
+def GetBilldetail():
+    if 'username' in session:
+        username = session["username"]
+        # all the data from the db will be in tuple in tuple form
+        conn = mysql.connect()
+        cur = conn.cursor()
+        try:
+            # get data
+            userid = username
+            global customer_name
+            c_name = request.form['c_name']
+            c_contact = request.form['c_contact']
+            bill_date = displayDate
+            p_id = request.form['p-id']
+            p_name = request.form['p-name']
+            p_quantity = request.form['p-quantity']
+            p_price = request.form['p-price']
+            totalOfProducts = int(p_price)*int(p_quantity)
+            # this prints to bill
+            curProduct = [p_id, p_name, p_quantity,
+                          p_price, totalOfProducts, c_name, c_contact]
+            global BillProducts
+            BillProducts.append(curProduct)
+
+            # this deletes the stocks which are being sold
+            UpdateStockOnInvoice(p_id, p_quantity, "sub")
+
+        except:
+            flash("Error")
+        return render_template("billing.html", username=username, date=displayDate, bill_detail=BillProducts)
+    else:
+        return redirect("login")
+
+
+@app.route("/Showbill", methods=["GET"])
+def showBill():
+    if 'username' in session:
+        username = session["username"]
+        # this calculates the total bill amount
+        totalBill = calcTotalBill()
+        # tax
+        to_pay = 0
+        if totalBill <= 1000:
+            tax = 20
+            to_pay = totalBill+tax
+        elif totalBill >= 1000 and totalBill <= 10000:
+            tax = 62
+            to_pay = totalBill+tax
+        elif totalBill > 10000 and totalBill <= 50000:
+            tax = 100
+            to_pay = totalBill+tax
+        else:
+            tax = 135
+            to_pay = totalBill+tax
+
+        _totalBill = formatNumber(totalBill)
+        _to_pay = formatNumber(to_pay)
+
+        # Stores the selling record to db
+        c_name = BillProducts[0][5]
+        c_contact = BillProducts[0][6]
+
+        conn = mysql.connect()
+        cur = conn.cursor()
+        cur.execute("INSERT INTO `billing_record`(`userid`,`bill_id`,`customer_name`,`bill_date`,`bill_total`,`customer_contact`) VALUES (%s,"
+                    "%s,%s,%s,%s,%s)", (username, BillID, c_name, displayDate, to_pay, c_contact))
+        conn.commit()
+        #
+        return render_template("bill.html", username=username, date=displayDate, bill_detail=BillProducts, total_amount=_totalBill, customer_name=c_name, customer_contact=c_contact, billID=BillID, tax=tax, to_pay=_to_pay)
+    else:
+        return redirect("login")
+
+
+@app.route("/ClearBillArray")
+def clearBill():
+    if 'username' in session:
+        username = session["username"]
+        # genrates a unique bill id
+        myuuid = uuid.uuid4()
+        strUid = str(myuuid)
+        global BillID
+        BillID = strUid[0:7]
+        # clear the bill product list
+        global BillProducts
+        BillProducts.clear()
+        return render_template("billing.html", username=username, date=displayDate, bill_detail=BillProducts, billID=BillID)
+    else:
+        return redirect("login")
+
+
+@app.route('/searchBill', methods=["GET", "POST"])
+def searchBill():
+    if 'username' in session:
+        username = session["username"]
+        conn = mysql.connect()
+        cur = conn.cursor()
+        # get data
+        try:
+            userid = username
+            b_id = request.form['b-id']
+            # b_id = '1ba53a7'
+            cur.execute("SELECT * FROM `billing_record` WHERE `userid`= '" +
+                        userid + "' and `bill_id`='" + b_id+"'")
+            billlist = cur.fetchall()
+            print(billlist)
+        except:
+            flash("Error getting your bill")
+        return render_template("billing.html", username=username, date=displayDate, bills=billlist)
     else:
         return redirect("login")
 

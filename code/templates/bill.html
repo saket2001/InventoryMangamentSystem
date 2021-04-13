@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- all the basic css needed -->
+    <link rel="stylesheet" href="{{url_for('static',filename='flash.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='forms.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='table.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='billing.css')}}">
+    <!-- icons -->
+    <script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" class="">
+    <script defer src="{{url_for('static',filename='help.js')}}"></script>
+</head>
+
+<body>
+    <div class="form" style="width: 95%; margin:0 2%;">
+        <div class="bill-line"></div>
+        <h2 class="bill-heading">
+            Welcome to our Store <br>
+            Thank you for shopping with us. Visit again <br>
+            IMS Billing system <br>
+            Our Tel -
+        </h2>
+        <div class="bill-row">
+            <p>Bill ID- {{billID}}</p>
+            <p>Date - {{date}}</p>
+            <p>To - {{customer_name}}</p>
+            <p>Customer contact no - {{customer_contact}}</p>
+        </div>
+        <table class="bill-table">
+            <!-- empty row for spaces -->
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Quantity</th>
+                <th>Product Price</th>
+                <th>Total (Q x P)</th>
+            </tr>
+            {% for row in bill_detail %}
+            <tr>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <br>
+            <tr class="last-row">
+                <td> </td>
+                <td> </td>
+                <td>Total-</td>
+                <td>
+                    <p class="bill-numbers">{{total_amount}} Rs</p>
+                </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td>Service Tax- </td>
+                <td>
+                    <p class="bill-numbers">{{tax}} Rs</p>
+                </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td>Pay-</td>
+                <td>
+                    <p class="bill-numbers">{{to_pay}} Rs</p>
+                </td>
+            </tr>
+            <div class="bill-line"></div>
+        </table>
+        <div class="bill-row">
+            <p>For any query contact us at - <br> You can also reach us at our email- </p>
+            <p>To print the Bill press Ctrl+p</p>
+        </div>
+    </div>
+</body>
+
+</html>
