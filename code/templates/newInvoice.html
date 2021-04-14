@@ -62,7 +62,7 @@
         <button class="btn submit-btn" type="submit">Order</button>
     </form>
     <!-- view product -->
-    <div class="view-inventory">
+    <div class="form">
         <div class="info">
             <h1>View Your Invoices</h1>
             <p>
@@ -71,132 +71,37 @@
             <form action="/dashboard/viewInvoices" method="GET">
                 <button class="btn get-btn" type="submit">Refresh</button>
             </form>
+            <table style="width: 100%">
+                <h2>Your Past Invoices</h2>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>S ID</th>
+                    <th>S Name</th>
+                    <th>Date</th>
+                    <th>P ID</th>
+                    <th>P name</th>
+                    <th>Quantity</th>
+                    <th>P Price</th>
+                    <th>Total Amount</th>
+                </tr>
+                {% for row in table %}
+                <tr>
+                    <td class="row-small">{{row[0]}}</td>
+                    <td class="row-small">{{row[1]}}</td>
+                    <td class="row-medium">{{row[2]}}</td>
+                    <td class="row-medium">{{row[5]}}</td>
+                    <td class="row-small">{{row[6]}}</td>
+                    <td class="row-medium">{{row[7]}}</td>
+                    <td class="row-small">{{row[8]}}</td>
+                    <td class="row-medium">{{row[9]}}</td>
+                    <td class="row-medium">{{row[10]}} Rs</td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
 
-        <table>
-            <h2>Your Past Orders</h2>
-            <tr>
-                <th>Invoice ID</th>
-                <th>S ID</th>
-                <th>S Name</th>
-                <th>Date</th>
-                <th>P ID</th>
-                <th>P name</th>
-                <th>Quantity</th>
-                <th>P Price</th>
-                <th>Total Amount</th>
-            </tr>
-            {% for row in table %}
-            <tr>
-                <td class="row-small">{{row[0]}}</td>
-                <td class="row-small">{{row[1]}}</td>
-                <td class="row-medium">{{row[2]}}</td>
-                <td class="row-medium">{{row[5]}}</td>
-                <td class="row-small">{{row[6]}}</td>
-                <td class="row-medium">{{row[7]}}</td>
-                <td class="row-small">{{row[8]}}</td>
-                <td class="row-medium">{{row[9]}}</td>
-                <td class="row-medium">{{row[10]}} Rs</td>
-            </tr>
-            {% endfor %}
-        </table>
     </div>
 </div>
 <script src="{{url_for('static',filename='help.js')}}"></script>
 
 {% endblock %}
-
-<!-- <table>
-            <tr>
-                <th>Sr no</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id1">
-                </td>
-                <td class="row-large">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name1">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity1">
-                </td>
-                <td class="row-medium">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price1">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id2">
-                </td>
-                <td class="row-large">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name2">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity2">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price2">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    3
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id3">
-                </td>
-                <td class="row-large">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name3">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity3">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price3">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    4
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id4">
-                </td>
-                <td class="row-large">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name4">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity4">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price4">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    5
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-id5">
-                </td>
-                <td class="row-large">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-name5">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-quantity5">
-                </td>
-                <td class="row-small">
-                    <input type="text" id="Supplier id" class="input-box input-box--large" name="p-price5">
-                </td>
-            </tr>
-        </table> -->

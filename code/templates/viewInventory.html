@@ -30,35 +30,36 @@
             <form action="/dashboard/viewInventory" method="GET">
                 <button class="btn get-btn" type="submit">Refresh Inventory</button>
             </form>
+            <table style="width:100%">
+                <h2>Your Inventory</h2>
+                <tr>
+                    <th>User</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>price</th>
+                    <th>Max Limit</th>
+                    <th>Min Limit</th>
+                    <th>Stock left</th>
+                    <th>Supplier ID</th>
+                </tr>
+                {% for row in table %}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[6]}}</td>
+                    <td>{{row[7]}}</td>
+                    <td>{{row[8]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
 
-        <table>
-            <h2>Your Inventory</h2>
-            <tr>
-                <th>User</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>price</th>
-                <th>Max Limit</th>
-                <th>Min Limit</th>
-                <th>Stock left</th>
-                <th>Supplier ID</th>
-            </tr>
-            {% for row in table %}
-            <tr>
-                <td>{{row[0]}}</td>
-                <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
-                <td>{{row[3]}}</td>
-                <td>{{row[4]}}</td>
-                <td>{{row[5]}}</td>
-                <td>{{row[6]}}</td>
-                <td>{{row[7]}}</td>
-                <td>{{row[8]}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+
     </div>
 </div>
 

@@ -39,7 +39,7 @@ body {
 }
 
 table {
-    width: auto;
+    width: 90%;
     background-color: white;
     font-size: 18px;
     overflow: scroll;

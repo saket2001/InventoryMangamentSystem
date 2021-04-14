@@ -27,7 +27,53 @@
         <button class="close-btn">OK</button>
     </div>
     {% endfor %}
+    <!-- add product form  -->
+    <form class="form" action="/addToInventorylist" method="POST" method="GET">
+        <h2>Add product details to the inventory</h2>
+        <p style="padding: 1% 2%; font-size: 19px;">
+            Add all product details your inventory will contain.
+            Don't add same product again to inventory.
+            <br>
+            For restocking products, make a invoice about that product first, and then update the product.But our smart
+            feature will update the inventory once you make invoice so don't update the inventory yourself.
+        </p>
 
+        <label class="label" for="Product id">Supplier Id</label>
+        <input type="text" id="Supplier id" class="input-box input-box--small" name="s-id">
+
+        <label class="label" for="Product id">Product Id</label>
+        <input type="text" id="Product id" class="input-box input-box--small" name="p-id">
+
+        <label class="label" for="Product name">Product name</label>
+        <input type="text" id="Product Name" class="input-box input-box--large" name="p-name">
+
+        <label class="label" for="Product name">Product Category</label>
+        <input type="text" id="Product Category" class="input-box input-box--large" name="p-category">
+
+        <label class="label" for="Product Quantity">Product In stock</label>
+        <input type="text" id="Product Quantity" class="input-box input-box--small" name="p-instock">
+
+        <label class="label" for="Product Price">Product Price</label>
+        <input type="text" id="Product Price" class="input-box input-box--small" name="p-price">
+
+        <label class="label" for="Product min quantity ">Product Max Quantity to maintain</label>
+        <input type="text" id="Product max quantity" class="input-box input-box--small" name="p-maxlimit">
+
+        <label class="label" for="Product min quantity ">Product Min Quantity to maintain</label>
+        <input type="text" id="Product min quantity" class="input-box input-box--small" name="p-minlimit">
+
+
+        <button class="btn submit-btn">Add to inventory</button>
+    </form>
+    <div class="form">
+        <h2>
+            <span style="color:rgb(255, 38, 0)">NOTE:</span>
+            This all settings are not required from you to perform.
+            The inventory will be updated for you when you order the stocks via invoice. <br> Or when you sell certain
+            products your inventory will be updated for you.
+
+        </h2>
+    </div>
     <!-- Update product form -->
     <form action="/updateStockproductToMax" method="POST" class="sub-form" style="margin-top: 2%;">
         <h2>Update products in the inventory</h2>
@@ -81,45 +127,6 @@
         <input type="number" class="input-box input-box--small" placeholder="New Limit"
             style="margin: 1%;  margin-left: 0; width: 20%;" min="0" name="p-maxlimit">
         <button class="btn automatic-btn" type="submit" style="margin-left:0">Update</button>
-    </form>
-
-    <!-- add product form  -->
-    <form class="form" action="/addToInventorylist" method="POST" method="GET">
-        <h2>Add product details to the inventory</h2>
-        <p style="padding: 1% 2%; font-size: 19px;">
-            Add all product details your inventory will contain.
-            Don't add same product again to inventory.
-            <br>
-            For restocking products, make a invoice about that product first, and then update the product.But our smart
-            feature will update the inventory once you make invoice so don't update the inventory yourself.
-        </p>
-
-        <label class="label" for="Product id">Supplier Id</label>
-        <input type="text" id="Supplier id" class="input-box input-box--small" name="s-id">
-
-        <label class="label" for="Product id">Product Id</label>
-        <input type="text" id="Product id" class="input-box input-box--small" name="p-id">
-
-        <label class="label" for="Product name">Product name</label>
-        <input type="text" id="Product Name" class="input-box input-box--large" name="p-name">
-
-        <label class="label" for="Product name">Product Category</label>
-        <input type="text" id="Product Category" class="input-box input-box--large" name="p-category">
-
-        <label class="label" for="Product Quantity">Product In stock</label>
-        <input type="text" id="Product Quantity" class="input-box input-box--small" name="p-instock">
-
-        <label class="label" for="Product Price">Product Price</label>
-        <input type="text" id="Product Price" class="input-box input-box--small" name="p-price">
-
-        <label class="label" for="Product min quantity ">Product Max Quantity to maintain</label>
-        <input type="text" id="Product max quantity" class="input-box input-box--small" name="p-maxlimit">
-
-        <label class="label" for="Product min quantity ">Product Min Quantity to maintain</label>
-        <input type="text" id="Product min quantity" class="input-box input-box--small" name="p-minlimit">
-
-
-        <button class="btn submit-btn">Add to inventory</button>
     </form>
 
     <!-- delete product form-->

@@ -56,27 +56,30 @@ def UpdateStockOnInvoice(p_id, p_quantity, opt):
             "SELECT `product_instock`,`product_maxlimit` FROM `product` WHERE `userid` = '" + userid + "' and `productid`= '" + p_id + "'")
         # calc the new stock
         currentStock = cur.fetchone()
-        if currentStock[0] == 0:
-            flash("No Stocks left")
-        else:
-            # for adding stock
-            if opt == "add":
-                newStock = int(currentStock[0])+int(p_quantity)
-            # for deleteing stock
-            if opt == "sub":
-                newStock = int(currentStock[0])-int(p_quantity)
 
-            if newStock > currentStock[1]:
-                flash("You cannot add product stock over product max limit")
-            if newStock < 0:
-                flash("Product Stock are less for fulfilling this request")
-                return 0
+        # for adding stock on invoice
+        if opt == "invoiceadd":
+            newStock = int(currentStock[0])+int(p_quantity)
+        # for adding stock
+        if opt == "add":
+            newStock = int(currentStock[0])+int(p_quantity)
+        # for deleteing stock
+        if opt == "sub":
+            newStock = int(currentStock[0])-int(p_quantity)
 
-            # add the new stock
-            cur.execute("UPDATE `product` SET `product_instock`= '" + str(newStock) +
-                        "' WHERE `userid`= '" + userid + "' and `productid`= '" + p_id + "'")
-            flash("NEW !! Inventory updated 1 sec ago")
-            conn.commit()
+        # this checks if updated stock request is greater then max limit or not
+        if newStock > currentStock[1]:
+            flash("You cannot add product stock over product max limit")
+        # this checks if after substraction the stock is in negative
+        if newStock < 0:
+            flash("Product Stock are less for fulfilling this request")
+            return 0
+
+        # add the new stock
+        cur.execute("UPDATE `product` SET `product_instock`= '" + str(newStock) +
+                    "' WHERE `userid`= '" + userid + "' and `productid`= '" + p_id + "'")
+        flash("NEW !! Inventory updated 1 sec ago")
+        conn.commit()
     else:
         return redirect(url_for("login"))
 
@@ -598,7 +601,7 @@ def CreateNewInvoice():
 
                 # calc total amount
                 totalAmtOfInvoice = (float(product_price)
-                                     * int(product_quantity))+2000
+                                     * int(product_quantity))
 
                 # adding data to db
                 cur.execute("INSERT INTO `invoice` (`supplier_id`,`supplier_name`,`supplier_type`,`userid`,`invoice_date`,`product_id`,`product_name`,`product_quantity`,`product_prices`,`total_amount`) VALUES (%s,"
@@ -606,7 +609,8 @@ def CreateNewInvoice():
                 conn.commit()
                 flash("Your order worth {} Rs Has been placed.".format(
                     totalAmtOfInvoice))
-                UpdateStockOnInvoice(product_id, product_quantity, "add")
+                UpdateStockOnInvoice(
+                    product_id, product_quantity, "invoiceadd")
             except:
                 flash("Something went wrong ! Try again")
                 conn.close()
@@ -662,13 +666,14 @@ def GetBilldetail():
             totalOfProducts = int(p_price)*int(p_quantity)
 
             # this deletes the stocks which are being sold
-            UpdateStockOnInvoice(p_id, p_quantity, "sub")
 
-            # this prints to bill
-            curProduct = [p_id, p_name, p_quantity,
-                          p_price, totalOfProducts, c_name, c_contact]
-            global BillProducts
-            BillProducts.append(curProduct)
+            result = UpdateStockOnInvoice(p_id, p_quantity, "sub")
+            if result != 0:
+                # this prints to bill
+                curProduct = [p_id, p_name, p_quantity,
+                              p_price, totalOfProducts, c_name, c_contact]
+                global BillProducts
+                BillProducts.append(curProduct)
 
         except:
             flash("Error")

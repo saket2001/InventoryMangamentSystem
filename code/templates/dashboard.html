@@ -21,14 +21,16 @@
         <i class="fas fa-warehouse"></i>
         Inventory Management System
     </div>
-    <div class="block-container">
-        {% for mess in get_flashed_messages() %}
-        <div class="flash-message">
-            <p>{{mess}}</p>
-            <button class="close-btn">OK</button>
-        </div>
-        {% endfor %}
 
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+    <!-- a block for all new messages -->
+
+    <div class="block-container">
         <div class="block block--1">
             <div class="unit">
                 {{total_product}}
