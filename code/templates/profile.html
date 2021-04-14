@@ -37,7 +37,7 @@
         <div class="form-container">
             <label for="name">Your Name</label>
             <p class="medium">
-                Saket Chandorkar{{name}}
+                {{name}}
             </p>
 
             <label for="username">Your username</label>
@@ -47,12 +47,12 @@
 
             <label for="dob">Your DOB</label>
             <p class="medium">
-                2001/02/23{{dob}}
+                {{dob}}
             </p>
 
             <label for="contact_no">Your Contact no</label>
             <p class="medium">
-                9967992889 {{contact_no}}
+                {{contact_no}}
             </p>
             <br>
             <br>
@@ -63,7 +63,7 @@
             </p>
         </div>
     </div>
-    <form action="" class="form">
+    <form action="/updatepassword" method='POST' class="form">
         <h2>Change your password</h2>
         <p class="small">
             Enter old password and the new password <br>
@@ -74,9 +74,9 @@
         <input type="password" name="old_password" class="input-box input-box--large" placeholder="Old password">
         <input type="password" name="new_password" class="input-box input-box--large" placeholder="New password">
 
-        <button class="btn submit-btn" type="button">Change</button>
+        <button class="btn submit-btn" type="submit">Change</button>
     </form>
-    <form action="" class="form">
+    <form action="/deleteuseraccount" method="POST" class="form">
         <h2>Delete your Account</h2>
         <p class="small">
             Enter password to delete your account forever. All the details and inventory will be deleted of your
@@ -89,7 +89,7 @@
 
         <input type="password" name="password" class="input-box input-box--large" placeholder="password">
 
-        <button class="btn submit-btn" type="button">Delete now</button>
+        <button class="btn submit-btn" type="submit">Delete now</button>
     </form>
 
 </div>

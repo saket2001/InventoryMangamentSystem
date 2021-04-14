@@ -35,6 +35,5 @@ create table billing_record(
     customer_name varchar(30) not null,
     bill_date varchar(20) not null,
     bill_total double not null,
-    foreign key (userid) references user(username)
 )
 

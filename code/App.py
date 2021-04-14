@@ -7,7 +7,7 @@ app = Flask(__name__)  # creating the Flask class object
 mysql = MySQL()
 app.config["MYSQL_DATABASE_USER"] = 'root'
 app.config["MYSQL_DATABASE_PASSWORD"] = 'saket2315'
-app.config["MYSQL_DATABASE_DB"] = 'ims'
+app.config["MYSQL_DATABASE_DB"] = 'ims2'
 app.config["MYSQL_DATABASE_HOST"] = 'localhost'
 mysql.init_app(app)
 
@@ -56,16 +56,22 @@ def UpdateStockOnInvoice(p_id, p_quantity, opt):
             "SELECT `product_instock`,`product_maxlimit` FROM `product` WHERE `userid` = '" + userid + "' and `productid`= '" + p_id + "'")
         # calc the new stock
         currentStock = cur.fetchone()
-        # for adding stock
-        if opt == "add":
-            newStock = int(currentStock[0])+int(p_quantity)
-        # for deleteing stock
-        if opt == "sub":
-            newStock = int(currentStock[0])-int(p_quantity)
-
-        if newStock > currentStock[1]:
-            flash("You cannot add product stock over product max limit")
+        if currentStock[0] == 0:
+            flash("No Stocks left")
         else:
+            # for adding stock
+            if opt == "add":
+                newStock = int(currentStock[0])+int(p_quantity)
+            # for deleteing stock
+            if opt == "sub":
+                newStock = int(currentStock[0])-int(p_quantity)
+
+            if newStock > currentStock[1]:
+                flash("You cannot add product stock over product max limit")
+            if newStock < 0:
+                flash("Product Stock are less for fulfilling this request")
+                return 0
+
             # add the new stock
             cur.execute("UPDATE `product` SET `product_instock`= '" + str(newStock) +
                         "' WHERE `userid`= '" + userid + "' and `productid`= '" + p_id + "'")
@@ -98,6 +104,56 @@ def CountDetailsOfInventory(option):
     else:
         return redirect(url_for("dashboard"))
 
+# function to check stocks
+
+
+def checkStocks():
+    if 'username' in session:
+        username = session["username"]
+        # making connection
+        conn = mysql.connect()
+        cur = conn.cursor()
+        userid = username
+        # this gets all the products from the inventory
+        cur.execute(
+            "SELECT `product_name`,`productid`,`product_maxlimit`,`product_minlimit`,`product_instock` FROM `product` WHERE `userid` = '" + userid + "'")
+        inventory = cur.fetchall()
+        print(inventory)
+        # now checking each product for stocks
+        for product in inventory:
+            # print(product[3])
+            if product[4] == 0:
+                flash("Product {} with id {} are empty in inventory".format(
+                    product[0], product[1]))
+            if product[4] <= product[3]:
+                flash("Product {} with id {} is close to being empty".format(
+                    product[0], product[1]))
+    else:
+        return redirect(url_for("dashboard"))
+
+#
+
+
+def myprofile(option):
+    if 'username' in session:
+        username = session["username"]
+        # making connection
+        conn = mysql.connect()
+        cur = conn.cursor()
+        userid = username
+        if option == 1:
+            cur.execute(
+                "SELECT `name` FROM `user` WHERE `username` = '" + userid + "'")
+        if option == 2:
+            cur.execute(
+                "SELECT `dob` FROM `user` WHERE `username` = '" + userid + "'")
+        if option == 3:
+            cur.execute(
+                "SELECT `contact_no` FROM `user` WHERE `username` = '" + userid + "'")
+        Profile_data = cur.fetchone()
+        return Profile_data[0]
+    else:
+        return redirect(url_for("dashboard"))
 
 ###################################
 
@@ -187,6 +243,8 @@ def dashboard():
         total_product = CountDetailsOfInventory(1)
         total_suppliers = CountDetailsOfInventory(2)
         total_invoices = CountDetailsOfInventory(3)
+        # checking if stocks are empty or close to minlimit
+        checkStocks()
 
         return render_template("dashboard.html", username=username, date=displayDate, total_product=total_product, total_suppliers=total_suppliers, total_invoices=total_invoices)
     else:
@@ -195,11 +253,14 @@ def dashboard():
 
 @app.route('/dashboard/myprofile')
 def profile():
+    conn = mysql.connect()
+    cur = conn.cursor()
     if 'username' in session:
         username = session["username"]
-        # calling helper functions
-
-        return render_template("profile.html", username=username, date=displayDate)
+        Profile_name = myprofile(1)
+        Profile_dob = myprofile(2)
+        Profile_contactno = myprofile(3)
+        return render_template("profile.html", username=username, date=displayDate, name=Profile_name, dob=Profile_dob, contact_no=Profile_contactno)
     else:
         return redirect("login")
 
@@ -599,14 +660,15 @@ def GetBilldetail():
             p_quantity = request.form['p-quantity']
             p_price = request.form['p-price']
             totalOfProducts = int(p_price)*int(p_quantity)
+
+            # this deletes the stocks which are being sold
+            UpdateStockOnInvoice(p_id, p_quantity, "sub")
+
             # this prints to bill
             curProduct = [p_id, p_name, p_quantity,
                           p_price, totalOfProducts, c_name, c_contact]
             global BillProducts
             BillProducts.append(curProduct)
-
-            # this deletes the stocks which are being sold
-            UpdateStockOnInvoice(p_id, p_quantity, "sub")
 
         except:
             flash("Error")
@@ -689,6 +751,63 @@ def searchBill():
         except:
             flash("Error getting your bill")
         return render_template("billing.html", username=username, date=displayDate, bills=billlist)
+    else:
+        return redirect("login")
+
+
+@app.route('/updatepassword', methods=['POST'])
+def Updatepassword():
+    if 'username' in session:
+        username = session["username"]
+        conn = mysql.connect()
+        cur = conn.cursor()
+        if request.method == 'POST':
+            try:
+                userid = username
+                Old_password = request.form["old_password"]
+                New_password = request.form["new_password"]
+                cur.execute(
+                    "SELECT `password` FROM `user` WHERE `username` = '" + userid + "'")
+                user_password = cur.fetchone()
+                if Old_password != user_password[0]:
+                    flash("Old Password of user {} does not match".format(userid))
+                else:
+                    cur.execute("UPDATE `user` SET `password`= '" +
+                                New_password + "' WHERE `username`= '" + userid + "'")
+                    conn.commit()
+                    flash("Password of user {} updated successfully".format(userid))
+            except:
+                flash("Error while getting your password")
+        return redirect(url_for("login"))
+    else:
+        return redirect("login")
+
+
+@app.route("/deleteuseraccount", methods=["GET", "POST"])
+def deleteuser():
+    if 'username' in session:
+        username = session["username"]
+        # making connection
+        conn = mysql.connect()
+        cur = conn.cursor()
+        if request.method == "POST":
+            try:
+                userid = username
+                password = request.form["password"]
+                # executing query
+                cur.execute(
+                    "SELECT `password` FROM `user` WHERE `username` = '" + userid + "'")
+                User_password = cur.fetchone()
+                if password != User_password[0]:
+                    flash("Please give correct Password")
+                else:
+                    cur.execute(
+                        "DELETE FROM `user` WHERE `username` = '" + userid + "'")
+                    conn.commit()
+                    flash("Account of user {}, has been deleted".format(userid))
+            except:
+                flash("Error while clearing user")
+        return redirect(url_for("login"))
     else:
         return redirect("login")
 
