@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+}
+
+
+/* ////////////////////////
+/* right container */
+
+.main-container .right-container {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+}
+
+.main-container .right-container .welcome-message {
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 1% 2%;
+    font-size: 25px;
+    color: var(--dark-font-color);
+}
+
+/* block container */
+
+.block-container {
+    width: 100%;
+    height: 100%;
+    padding: 2% 1%;
+    margin: 0 2%;
+    display: flex;
+    flex-flow: column;
+}
+
+.block-row {
+    width: 100%;
+    height: auto;
+    padding: 1%;
+    margin: 1%;
+    display: flex;
+    flex-flow: row;
+}
+
+.main-container .block-container .block {
+    width: auto;
+    height: 90%;
+    padding: 1%;
+    margin: 1%;
+    display: flex;
+    flex-flow: row;
+    color: var(--dark-font-color);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.block.block:hover {
+    box-shadow: 9px 9px 18px #e9e9e9,
+        -9px -9px 18px #ffffff;
+}
+
+
+.main-container .block-container .block .unit-description {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: 500;
+    width: auto;
+    padding: 1% 7%;
+    color: var(--light-font-color);
+}
+
+.main-container .block-container .block .unit-description .unit {
+    font-size: 40px;
+    font-weight: 900;
+    padding: 0;
+    color: var(--dark-font-color);
+}
+
+.main-container .block-container .block .block-logo {
+    font-size: 50px;
+    color: var(--dark-blue);
+    width: auto;
+    padding: 1%;
+}
+
+/* flash message */
+.flash-message {
+    width: 90%;
+    height: auto;
+    margin: 1% 2%;
+    background-color: #1d4efa;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flash-message p {
+    font-size: 21px;
+    font-weight: 600;
+    padding: 2% 5%;
+    color: white;
+}
+
+.flash-message .close-btn {
+    width: auto;
+    padding: 1% 5%;
+    margin: 0 5%;
+    height: auto;
+    font-size: 20px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    color: var(--dark-font-color);
+    border-radius: 10px;
+    background-color: white;
+}

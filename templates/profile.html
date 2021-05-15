@@ -1,0 +1,81 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='profile.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>My Profile</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+    <div class="container form">
+        <h2>Account Settings</h2>
+        <img src="{{url_for('static',filename='unnamed.png')}}" alt="User picture" title="You">
+        <div class="form-container">
+            <label for="name">Your Name</label>
+            <p class="medium">
+                {{name}}
+            </p>
+
+            <label for="username">Your username</label>
+            <p class="medium">
+                {{username}}
+            </p>
+
+            <label for="dob">Your Email</label>
+            <p class="medium">
+                {{email}}
+            </p>
+
+            <label for="contact_no">Your Contact no</label>
+            <p class="medium">
+                {{contact_no}}
+            </p>
+            <br>
+            <br>
+
+            <a href="/signup" class="nav-link">Create your new account now</a>
+            <p class="small">
+                The following information is only known to us and it is secure with us.
+            </p>
+        </div>
+    </div>
+    <form action="/deleteuseraccount" method="POST" class="form">
+        <h2>Delete your Account</h2>
+        <p class="small">
+            Enter password to delete your account forever. All the details and inventory will be deleted of your
+            account.
+            <br>
+            <span style="color:darkblue; font-weight: 600;">
+                Hope to see you again !
+            </span>
+        </p>
+
+        <input type="password" name="password" class="input-box input-box--large" placeholder="password">
+
+        <button class="btn submit-btn" type="submit">Delete now</button>
+    </form>
+
+</div>
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

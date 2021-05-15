@@ -1,0 +1,120 @@
+{% extends "dashboard.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='newInvoice.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>New Invoice</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+
+    <form class="form" action="/CreateNewInvoice" method="POST" autocomplete="off">
+        <h2>New Invoice</h2>
+        <p>
+            You can order new products from suppliers by filling the details here. <br>
+            We will update the inventory with the new products you ordered. So don't update inventory manually.
+        </p>
+
+        <label class="label" for="Supplier name">Supplier name</label>
+        <select name="s-name" id="" class="input-box input-box--small" required>
+            {% for value in supplier_names %}
+            <option value="{{value[0]}}" class="input-box input-box--small">
+                {{value[0]}}</option>
+            {% endfor %}
+        </select>
+
+        <label class="label" for="Supplier id">Supplier Id</label>
+        <select name="s-id" id="" class="input-box input-box--small" required>
+            {% for value in supplier_ids %}
+            <option value="{{value[0]}}" class="input-box input-box--small">
+                {{value[0]}}</option>
+            {% endfor %}
+        </select>
+
+        <label class="label" for="Supplier id">Supplier Type</label>
+        <input type="text" id="Supplier id" name="s-type" class="input-box input-box--small">
+
+        <label class="label" for="Product id">Product Id</label>
+        <select name="p-id" id="" class="input-box input-box--small" required>
+            {% for value in product_ids %}
+            <option value="{{value[0]}}" class="input-box input-box--small">
+                {{value[0]}}</option>
+            {% endfor %}
+        </select>
+
+        <label class="label" for="Product name">Product name</label>
+        <select name="p-name" id="" class="input-box input-box--small" required>
+            {% for value in product_names %}
+            <option value="{{value[0]}}" class="input-box input-box--small">
+                {{value[0]}}</option>
+            {% endfor %}
+        </select>
+
+        <label class="label" for="Product Quantity">Product Quantity</label>
+        <input type="text" id="Product Quantity" name="p-quantity" class="input-box input-box--small">
+
+        <label class="label" for="Product Price">Product Price</label>
+        <input type="text" id="Product Price" name="p-price" class="input-box input-box--small">
+
+        <button class="btn submit-btn" type="submit">Order</button>
+    </form>
+    <!-- view product -->
+    <div class="form">
+        <div class="info">
+            <h1>Past Invoices</h1>
+            <p>
+                All your past invoices given below
+            </p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>S ID</th>
+                    <th>S Name</th>
+                    <th>Date</th>
+                    <th>P ID</th>
+                    <th>name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total Amount</th>
+                </tr>
+                {% for row in table %}
+                <tr>
+                    <td class="row-small">{{row[0]}}</td>
+                    <td class="row-small">{{row[1]}}</td>
+                    <td class="row-medium">{{row[2]}}</td>
+                    <td class="row-medium">{{row[5]}}</td>
+                    <td class="row-small">{{row[6]}}</td>
+                    <td class="row-medium">{{row[7]}}</td>
+                    <td class="row-small">{{row[8]}}</td>
+                    <td class="row-medium">{{row[9]}}</td>
+                    <td class="row-medium">{{row[10]}} Rs</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+</div>
+<script src="{{url_for('static',filename='help.js')}}"></script>
+
+{% endblock %}

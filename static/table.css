@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+    color: rgb(37, 34, 34);
+}
+
+/* view inventory */
+
+.info {
+    width: 95%;
+    height: 100vh;
+    padding: 2%;
+    margin: 1% 2%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+    background-color: var(--primary-bg-color);
+}
+
+
+table {
+    width: 100%;
+    height: auto;
+    font-size: 18px;
+    padding: 1%;
+    overflow: auto;
+    border: none;
+    border-collapse: unset;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+table caption {
+    font-size: 28px;
+}
+
+table,
+th,
+td {
+    text-align: center;
+    border: none;
+}
+
+th {
+    width: auto;
+    color: var(--dark-blue);
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    padding: 1% 2%;
+    margin: 0;
+    background-color: #f2f6ff;
+
+}
+
+
+/* 
+th,
+td {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+} */
+
+td {
+    width: auto;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 1% 2%;
+    margin: 0;
+    text-align: center;
+    background-color: #ffffffe3;
+}
+
+
+
+.less-stock {
+    color: #dd794a;
+    font-weight: bolder;
+}
+
+.In-stock {
+    color: #5913b4;
+    font-weight: bold;
+}
+
+.Out-of-stock {
+    color: rgb(196, 53, 53);
+    font-weight: bolder;
+    font-size: 21px;
+}

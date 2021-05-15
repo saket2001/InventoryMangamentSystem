@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+}
+
+
+/* ////////////////////////
+/* left container */
+.left-container {
+    display: flex;
+    flex-flow: column wrap;
+    width: 20%;
+    height: 100%;
+    font-size: 22px;
+    color: white;
+    background-color: var(--dark-blue);
+}
+
+
+p {
+    width: 100%;
+    font-size: 20px;
+    margin: 0;
+    padding: 1% 0;
+}
+
+h2 {
+    width: 100%;
+    text-align: left;
+    padding: 1% 0;
+    margin: 1% 0;
+    font-size: 30px;
+    font-weight: 700;
+}

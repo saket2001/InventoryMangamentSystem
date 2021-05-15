@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+    background-color: var(--secondary-bg-color);
+}
+
+
+/* ////////////////////////
+
+/* right container */
+
+h2 {
+    width: 100%;
+    padding: 0 auto;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.container {
+    width: 90%;
+    height: auto;
+    padding: 1% auto;
+    margin: 1% auto;
+    display: flex;
+    flex-direction: row;
+}
+
+
+img {
+    width: 25%;
+    height: 38%;
+}
+
+.nav-link {
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--dark-blue);
+}
+
+label {
+    font-size: 19px;
+    padding: 1% auto;
+    color: var(--dark-blue);
+}
+
+.medium {
+    font-size: 25px;
+    padding: 1% auto;
+    font-weight: 500;
+    color: var(--dark-font-color);
+    text-transform: capitalize;
+}

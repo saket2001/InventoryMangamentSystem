@@ -1,0 +1,107 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='dashboard.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>Dashboard</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse" style="color: #023e8a;"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+    <!-- a block for all new messages -->
+    <div class="block-container">
+        <div class="block-row">
+            <div class="block block--1">
+                <div class="block-logo">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="unit-description">
+                    <span class="unit">
+                        {{total_product}}
+                    </span>
+                    <p>
+                        Total Products in inventory
+                    </p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-logo">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="unit-description">
+                    <span class="unit">
+                        {{total_invoices}}
+                    </span>
+                    <p>
+                        Total Invoices created
+                    </p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-logo">
+                    <i class="fas fa-money-check"></i>
+                </div>
+                <div class="unit-description">
+                    <span class="unit">
+                        {{total_spending}} &nbsp; ₹
+                    </span>
+                    <p>
+                        Total spending on invoices
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="block-row">
+            <div class="block">
+                <div class="block-logo">
+                    <i class="fa fa-money"></i>
+                </div>
+                <div class="unit-description">
+                    <span class="unit">
+                        {{total_profit}} &nbsp; ₹
+                    </span>
+                    <p>
+                        Total earning from sell
+                    </p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-logo">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="unit-description">
+                    <span class="unit">
+                        {{product_name}}
+                    </span>
+                    <p>
+                        Total Products under min limit
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

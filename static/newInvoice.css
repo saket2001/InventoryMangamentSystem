@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+}
+
+/*  */
+
+p {
+    font-size: 21px;
+    padding: 1%;
+    margin: 1%;
+    font-weight: 500;
+}
+
+/* invoice container */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1% 2%;
+}
+
+.invoice-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1%;
+}
+
+.invoice-heading {
+    width: auto;
+    color: orange;
+    font-size: 22px;
+}
+
+.invoice-p {
+    font-size: 19px;
+}

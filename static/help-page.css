@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    background-color: white;
+}
+
+/* nav */
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+    font-size: 25px;
+    background-color: rgb(122, 57, 184);
+    color: white;
+}
+
+nav .company-name {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-link a {
+    text-decoration: none;
+    color: white;
+    padding: 2%;
+}
+
+.nav-link a:hover {
+    border-bottom: 1px solid white;
+}
+
+/* container */
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 1% 2%;
+}
+
+.container .header {
+    padding: 1% 2%;
+    margin: 1% 0;
+    background-color: rgba(245, 245, 245, 0.836);
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.container .header h1 {
+    font-size: 26px;
+}
+
+.container .header h1::before {
+    content: "Q)";
+    padding-right: 1%;
+}
+
+.container .header p {
+    font-size: 20px;
+    text-align: left;
+    width: 90%;
+    margin-top: 1%;
+}
+
+ol {
+    font-size: 19px;
+    padding: 1% 2%;
+}
+
+
+ol li {
+    padding: 1%;
+}
+
+/* instruction container */
+.container .instruction-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    padding: 1%;
+    margin-top: 2%;
+}
+
+.instruction-container .block {
+    width: 30%;
+    padding: 1% 2%;
+    margin: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 3px dotted black;
+}
+
+.instruction-container .block .step-no {
+    font-size: 35px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 1% auto;
+    margin: 3% auto;
+}
+
+.instruction-container .block .step-icon {
+    padding: 2% auto;
+    margin: 2% auto;
+    width: 150px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+}
+
+.instruction-container .block .icon {
+    font-size: 80px;
+}
+
+.instruction-container .block .step-heading {
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 1% auto;
+    margin: 3% auto;
+}
+
+.instruction-container .block .step-content {
+    font-size: 18px;
+    padding: 1% auto;
+    margin: 1% auto;
+    text-align: justify;
+}
+
+.bg-skyblue {
+    background-color: lightskyblue;
+}
+
+.bg-salmon {
+    background-color: lightsalmon;
+}
+
+.bg-green {
+    background-color: rgb(70, 187, 70);
+}
+
+.bg-red {
+    background-color: rgb(230, 64, 64);
+}
+
+.clr-skyblue {
+    color: lightskyblue;
+}
+
+.clr-salmon {
+    color: lightsalmon;
+}
+
+.clr-green {
+    color: rgb(70, 187, 70);
+}
+
+.clr-red {
+    color: rgb(230, 64, 64);
+}

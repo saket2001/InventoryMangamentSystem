@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg-color: #ffffff;
+    --secondary-bg-color: #f5f8fc;
+    --dark-font-color: #000001;
+    --light-font-color: #536778;
+    --light-border-color: #ced4da;
+    --dark-blue: #023e8a;
+}
+
+
+html,
+body {
+    font-size: 100%;
+    font-family: 'Noto Sans JP',
+        sans-serif;
+}
+
+
+.form {
+    width: 90%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2%;
+    margin: 1% 2%;
+    background-color: white;
+    border: 1px solid var(--light-border-color);
+    border-radius: 8px;
+}
+
+.sub-form {
+    width: 90%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1% 2%;
+    margin: 0 2%;
+    background-color: var(--secondary-bg-color);
+}
+
+h2 {
+    width: 100%;
+    text-align: left;
+    padding: 1% 0;
+    margin: 1% 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--dark-font-color)
+}
+
+.form .label {
+    font-size: 21px;
+    padding: 0 2%;
+    color: var(--dark-font-color)
+}
+
+.input-box {
+    width: 40%;
+    padding: 1% 2%;
+    margin: 1% 2%;
+    font-size: 20px;
+    border: 1px solid var(--dark-border-color);
+    background-color: var(--secondary-bg-color);
+    outline: none;
+    border-radius: 5px;
+}
+
+.input-box:focus {
+    border: 1px solid darkblue;
+    border-radius: 6px;
+}
+
+.input-box--small {
+    width: 30%;
+}
+
+.input-box--large {
+    width: 50%;
+}
+
+.btn {
+    width: auto;
+    outline: none;
+    border: none;
+    padding: 1% 2%;
+    margin: 3% 2%;
+    border-radius: 5px;
+    transition: all 0.5 ease;
+}
+
+.submit-btn,
+.get-btn {
+    font-size: 24px;
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.get-btn {
+    padding: 1% 2%;
+    margin: 3% 0;
+}
+
+.submit-btn:hover,
+.get-btn:hover {
+    border-radius: 5px;
+    background-color: rgba(23, 23, 192, 0.76);
+    cursor: pointer;
+}
+
+
+p {
+    width: 100%;
+    font-size: 20px;
+    margin: 0;
+    padding: 1% 0;
+    color: var(--light-font-color)
+}

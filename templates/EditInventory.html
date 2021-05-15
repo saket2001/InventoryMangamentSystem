@@ -1,0 +1,170 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='EditInventory.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>Edit inventory</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+    <!-- add product form  -->
+    <form class="form" action="/addToInventorylist" method="POST" method="GET" autocomplete="off">
+        <h2>Add product details to the inventory</h2>
+        <p style="padding: 1% 2%; font-size: 19px;">
+            Add all product details your inventory will contain.
+            Don't add same product again to inventory.
+            For restocking products, make a invoice about that product first, our feature will update the inventory once
+            you make invoice so don't update the inventory yourself.
+            NOTE:While entering supplier ID make sure you have that supplier in your supplier list or else you can't add
+            product.
+        </p>
+        <br>
+        <label class="label" for="Product id">Supplier Id</label>
+        <input type="text" id="Supplier id" class="input-box input-box--small" name="s-id">
+
+        <label class="label" for="Product id">Product Id</label>
+        <input type="text" id="Product id" class="input-box input-box--small" name="p-id">
+
+        <label class="label" for="Product name">Product name</label>
+        <input type="text" id="Product Name" class="input-box input-box--large" name="p-name">
+
+        <label class="label" for="Product name">Product Category</label>
+        <input type="text" id="Product Category" class="input-box input-box--large" name="p-category">
+
+        <label class="label" for="Product Quantity">Product In stock</label>
+        <input type="text" id="Product Quantity" class="input-box input-box--small" name="p-instock">
+
+        <label class="label" for="Product Price">Product Price</label>
+        <input type="text" id="Product Price" class="input-box input-box--small" name="p-price">
+
+        <label class="label" for="Product min quantity ">Product Max Quantity to maintain</label>
+        <input type="text" id="Product max quantity" class="input-box input-box--small" name="p-maxlimit">
+
+        <label class="label" for="Product min quantity ">Product Min Quantity to maintain</label>
+        <input type="text" id="Product min quantity" class="input-box input-box--small" name="p-minlimit">
+
+
+        <button class="btn submit-btn">Add to inventory</button>
+    </form>
+    <div class="form">
+        <h2>Update Inventory</h2>
+    </div>
+    <!-- Update product form -->
+    <!-- <form action="/updateStockproductToMax" method="POST" class="form" style="margin-top: 2%;" autocomplete="off">
+        <h2>Update single product to max quantity</h2>
+        <p>
+            You can simply update the inventory with the product which you want to restock to maximum limit. <br>
+            Just add the
+            product ID
+            and click the
+            button and inventory will reorder the product for you
+        </p>
+        <input type="text" id="Product id" class="input-box input-box--small" placeholder="Product ID"
+            style="margin: 1%;  margin-left: 0;" name="p-id">
+        <button class="btn submit-btn" type="submit" style="margin-left: 0;">Update</button>
+    </form> -->
+
+    <!-- <form action="/updateStock" method="POST" class="form" autocomplete="off">
+        update single 
+        <h2>Update single product to specific quantity</h2>
+        <p>
+            You can also update the inventory with the product which you want to restock to certain amount.
+            Just add the
+            product ID and the quantity
+            and click the
+            button and inventory will reorder the product for you
+        </p>
+        <input type="text" id="Product id" class="input-box input-box--small" placeholder="ProductID"
+            style="margin: 1%; margin-left: 0;" name="p-id">
+        <input type="number" id="Product quantity" class="input-box input-box--small" placeholder="Quantity"
+            style="margin: 1%;  margin-left: 0; width: 20%;" min="0" name="p-quantity">
+        <button class="btn submit-btn" type="submit" style="margin-left: 0;">Add</button>
+    </form> -->
+    <!-- <form action="/updateallStock" autocomplete="off" method="POST" class="form">
+         Update all 
+    <h2>Update all products to max</h2>
+    <p>
+        We can update the inventory with the products which are close to their threshold limit . <br> Just click
+        the
+        button and inventory will reorder the products for you
+    </p>
+    <button class="btn submit-btn" type="submit" style="margin-left:0">Update All</button>
+    </form> -->
+    <form action="/updateMaxLimit" method="POST" class="form" autocomplete="off">
+        <!-- Update max-limit -->
+        <h2>Update max limit by certain number</h2>
+        <p>
+            You can update the product maximum limit your inventory can hold. <br> Just add the new limit and then click
+            the
+            button and limit will be updated.
+        </p>
+        <input type="text" id="Product id" class="input-box input-box--small" placeholder="ProductID"
+            style="margin: 1%; margin-left: 0;" name="p-id">
+        <input type="number" class="input-box input-box--small" placeholder="New Limit"
+            style="margin: 1%;  margin-left: 0; width: 20%;" min="0" name="p-maxlimit">
+        <button class="btn submit-btn" type="submit" style="margin-left:0">Update</button>
+    </form>
+    <form action="/updateStockPrice" method="POST" class="form" autocomplete="off">
+        <!-- update single -->
+        <h2>Update Product Price</h2>
+        <p>
+            You can also update the inventory with the new product price from old product price.
+            Just add the
+            product ID and the new price
+            and click the
+            button and inventory will update the product price for you
+        </p>
+        <input type="text" id="Product id" class="input-box input-box--small" placeholder="ProductID"
+            style="margin: 1%; margin-left: 0;" name="p-id">
+        <input type="text" id="Product price" class="input-box input-box--small" placeholder="New Price"
+            style="margin: 1%;  margin-left: 0; width: 20%;" name="p-price">
+        <button class="btn submit-btn" type="submit" style="margin-left: 0;">Update</button>
+    </form>
+
+    <!-- delete product form-->
+    <form action="/deleteProduct" class="form" method="POST" autocomplete="off">
+        <h2>Delete products from the inventory</h2>
+        <!-- delete product -->
+        <p>Smart feature doesn't delete products from inventory on it's own. So remove any
+            products from inventory
+            if you want.
+        </p>
+        <input type="text" id="Product id" class="input-box input-box--small" placeholder="Product ID"
+            style="margin: 1%;  margin-left: 0;" name="p-id">
+        <button class="btn submit-btn" style="margin-left: 0;" type="submit">Delete</button>
+
+    </form>
+
+    <form action="/clearAllProducts" class="form" method="POST" autocomplete="off">
+        <!-- clear all -->
+        <h2>Delete whole inventory</h2>
+        <p>
+            You can also clear the whole inventory . Just click the
+            button and inventory will be cleared
+        </p>
+        <button class="btn submit-btn" type="submit" style="margin-left: 0;">Clear All</button>
+    </form>
+</div>
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

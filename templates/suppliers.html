@@ -1,0 +1,85 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='suppliers.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>Suppliers Page</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+
+    <!--View suppliers  -->
+    <div class="form">
+        <h2>View all your suppliers</h2>
+        <table>
+            <div class="head">
+                <tr class="head">
+                    <th>Supplier ID</th>
+                    <th>Supplier Name</th>
+                    <th>Supplier Type</th>
+                    <th>Supplier Contact no</th>
+                </tr>
+            </div>
+            {% for row in table %}
+            <tr>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <!-- add product form  -->
+    <form action="/dashboard/newsuppliers" method="POST" method="GET" class="form" autocomplete="off">
+        <h2>Add new Supplier</h2>
+
+        <label class="label" for="Supplier name">Supplier name</label>
+        <input type="text" id="Supplier Name" class="input-box input-box--large" name="s-name">
+
+        <label class="label" for="Supplier id">Supplier Id</label>
+        <input type="text" id="Supplier id" class="input-box input-box--small" name="s-id">
+
+        <label class="label" for="supplier type">Type of Supplier </label>
+        <input type="text" id="supplier type" class="input-box input-box--large"
+            placeholder="eg book supplier , vegetable supplier" name="s-type">
+
+        <label class="label" for="supplier no">Supplier contact no</label>
+        <input type="text" id="supplier no" class="input-box input-box--small" name="s-contactno">
+
+        <button class="btn submit-btn" type="submit">Done</button>
+    </form>
+    <!-- delete supplier form-->
+    <form action="/deleteSupplier" class="form" method="POST">
+        <h2>Delete Supplier from the database</h2>
+        <p>Incase any changes in your supplier, you can delete that supplier and add a new one.</p>
+        <input type="text" id="supplier id" class="input-box input-box--small" placeholder="supplier ID"
+            style="margin: 1%;  margin-left: 0;" name="s-id" required>
+        <button class="btn submit-btn" style="margin-left: 0;" type="submit">Delete</button>
+    </form>
+</div>
+
+
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

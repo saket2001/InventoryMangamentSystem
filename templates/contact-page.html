@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='signup.css')}}">
+<title>Contact us</title>
+{% endblock %}
+
+{% block body %}
+<!-- nav-->
+<nav>
+    <div class="logo">
+        Inventory Management System
+    </div>
+    <div class="nav-items">
+        <a href="/signup" class="nav-link">Sign up</a>
+        <a href="/login" class="nav-link">Sign in</a>
+    </div>
+</nav>
+
+{% for mess in get_flashed_messages() %}
+<div class="flash-message">
+    <p>{{mess}}</p>
+    <button class="close-btn">OK</button>
+</div>
+{% endfor %}
+
+<div class="container">
+    <form class="form" action="/contactUs" method="POST" method="GET" autocomplete="off">
+        <h2>Having any trouble ?</h2>
+        <p class="full-text">
+            Reach us by filling up the form. Our Team will contact you back by email within 24 hr.
+            Thank you for reaching to us !!
+        </p>
+        <input type="text" name="username" class="input-box" placeholder="Username" required>
+        <input type="email" placeholder="Email" name="email" class="input-box" required>
+        <textarea class="textarea-box" name="mail-body" id="" cols="200" rows="5"
+            placeholder="Enter your question or doubt here..."></textarea>
+        <button class=" btn login-btn" type="submit">Send</button>
+    </form>
+</div>
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}

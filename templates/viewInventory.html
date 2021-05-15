@@ -1,0 +1,64 @@
+{% extends "dashboardLayout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='EditInventory.css')}}">
+<script src="https://kit.fontawesome.com/6f628bdd8a.js" crossorigin="anonymous"></script>
+<title>View inventory</title>
+{% endblock %}
+
+{% block username %}
+{{username}}
+{% endblock %}
+
+{% block currentDate %}
+{{date}}
+{% endblock %}
+
+{% block rightContainer %}
+<!-- content  -->
+<div class="right-container">
+    <div class="welcome-message">
+        <i class="fas fa-warehouse"></i>
+        Inventory Management System
+    </div>
+    <!-- view product -->
+    <div class="info">
+        <h2>Your Inventory</h2>
+        <p>
+            This table contains all the product from your inventory
+        </p>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>S ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Max Limit</th>
+                <th>Min Limit</th>
+                <th>In Stock</th>
+                <th>Status</th>
+            </tr>
+            {% for row in table %}
+            <tr>
+                <td>{{row[1]}}</td>
+                <td>{{row[8]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}} rs</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                {% if row[9]== "Out Of stock" %}
+                <td class="Out-of-stock">Out Of Stock</td>
+                {% elif row[9]== "Less stock" %}
+                <td class="less-stock">less stock</td>
+                {% else %}
+                <td class="In-stock">In stock</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

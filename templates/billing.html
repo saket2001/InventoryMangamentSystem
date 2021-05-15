@@ -1,0 +1,156 @@
+{% extends "Layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='billing.css')}}">
+<title>Billing</title>
+{% endblock %}
+
+{% block body %}
+
+<!-- content  -->
+<div class="right-container">
+    <!-- nav with company name -->
+    <nav>
+        <div class="company-name">
+            <i class="fas fa-warehouse"></i>
+            Inventory management system
+        </div>
+        <div class="nav-link">
+            <a href="/dashboard">Home</a>
+        </div>
+    </nav>
+    {% for mess in get_flashed_messages() %}
+    <div class="flash-message">
+        <p>{{mess}}</p>
+        <button class="close-btn">OK</button>
+    </div>
+    {% endfor %}
+    <div class="block-container">
+        <h1>Billing section</h1>
+        <div class="row1">
+            <form action="/ClearBillArray" class="sub-form">
+                <button class="btn submit-btn">New Bill</button>
+            </form>
+            <p class="bill_id">Bill ID- {{billID}}</p>
+        </div>
+        <br>
+        <form action="/dashboard/Createbill" class="form" method="POST" method="GET" autocomplete="off">
+            <!-- Customer details form  -->
+            <h2 class="sub-heading">Customer details <br>
+                <p>Enter only once</p>
+            </h2>
+            <div class="row1">
+                <input type="text" class="input-box input-box--large" placeholder="Name" name="c_name">
+                <input type="tel" maxlength="10" class="input-box input-box--large" placeholder="Contact no"
+                    name="c_contact">
+            </div>
+            <hr />
+            <!-- product details -->
+            <h2 class="sub-heading">Product Details</h2>
+            <div class="col">
+                <label for="p-id">Product ID</label>
+                <select name="p-id" id="" class="input-box input-box--small" required>
+                    {% for value in productsId %}
+                    <option value="{{value[0]}}" class="input-box input-box--small">
+                        {{value[0]}}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="p-id">Product Name</label>
+                <select name="p-name" id="" class="input-box input-box--small" required>
+                    {% for value in products %}
+                    <option value="{{value[0]}}" class="input-box input-box--small">
+                        {{value[0]}}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="p-id">Product Quantity</label>
+                <input type="number" id="p-quantity" class="input-box input-box--small" name="p-quantity" required>
+
+                <label for="p-id">Product Price</label>
+                <input type="text" id="p-price" class="input-box input-box--small" placeholder="Rs" name="p-price"
+                    required>
+
+                <div class="btn-row">
+                    <button class="btn submit-btn">Add Item</button>
+                </div>
+            </div>
+            <div class="form" style="width: 100%;">
+                <h2>Bill Items</h2>
+                <table style="width: 100%">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total(Q x P)</th>
+                    </tr>
+                    {% for row in bill_items %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div id="calc-block">
+                <p>Total Amount to Pay- {{total_amount}} ₹
+                </p>
+            </div>
+            <form action="/Showbill" class="sub-form">
+                <button class="btn submit-btn">
+                    <a href="/Showbill" class="a-link" target="_blank">Get Bill</a>
+                </button>
+            </form>
+            <form action="/calcChange" class="form" method="POST">
+                <p style="color:red">
+                    *First press get bill then only use this
+                </p>
+                <div class="row1 center">
+                    <label for="entry">Customer gave - </label>
+                    <input type="text" id="entry" class="input-box input-box-small" name="entry" placeholder="Rs">
+                    <button class="btn submit-btn">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                    <p style="font-weight: bold; font-size:30px"> Return -
+                        <span style="font-weight: bold; font-size:30px">
+                            {{returnMoney}} &nbsp; ₹
+                        </span>
+                    </p>
+                </div>
+            </form>
+        </form>
+
+        <form action="/searchBill" class="form" method="POST" autocomplete="off">
+            <h2>Search any Bill</h2>
+            <div class="row" style="width: 100%;">
+                <input type="text" id="bill_id" class="input-box input-box--small" placeholder="Bill id" name="b-id"
+                    required>
+                <button type="submit" class="btn submit-btn" type="submit">Search</button>
+            </div>
+            <table style="width: 100%">
+                <tr>
+                    <th>Bill ID</th>
+                    <th>Bill Date</th>
+                    <th>Customer Name</th>
+                    <th>Customer Contact</th>
+                    <th>Bill total</th>
+                </tr>
+                {% for row in bills %}
+                <tr>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[4]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+</div>
+
+<script src="{{url_for('static',filename='help.js')}}"></script>
+{% endblock %}
